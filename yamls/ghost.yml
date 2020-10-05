@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+    ghost:
+        image: ghost:2-alpine
+        ports:
+            - "publishedPort:2368"
+        volumes: 
+            - ghost:/var/lib/ghost/content
+        deploy:
+            mode: replicated
+            replicas: 1
+            endpoint_mode: vip
+            resources: 
+                limits: 
+                    cpus: "cpu"
+                    memory: ram
+volumes:
+    ghost: {}

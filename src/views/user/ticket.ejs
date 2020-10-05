@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, CMS project">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="au-card au-card--no-shadow au-card--no-pad m-b-40 au-card--border">
+                                    <div class="au-card-title" style="background-image:url('/images/bg-title-02.jpg');">
+                                        <div class="bg-overlay bg-overlay--blue"></div>
+                                        <h3>
+                                            <i class="zmdi zmdi-comment-text"></i>
+                                            پیغومات
+                                        </h3>
+                                    </div>
+                                    <div class="au-inbox-wrap">
+                                        <div class="au-chat au-chat--border text-right">
+                                            <div class="au-chat__title">
+                                                <div class="au-chat-info">
+                                                    <div class="avatar-wrap online">
+                                                        <div class="avatar avatar--small">
+                                                            <img src="/images/icon/user.png" alt="John Smith">
+                                                        </div>
+                                                    </div>
+                                                    <span class="nick">
+                                                        <a href="#"><%= fullname %></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="au-chat__content au-chat__content2 js-scrollbar5">
+                                                <% for (let i = 0; i < ticketMessages.length; i++) { %>
+                                                    <% if (userId === ticketMessages[i].userId) { %>
+                                                        <div class="send-mess-wrap">
+                                                            <div class="send-mess__inner">
+                                                                <div class="avatar avatar--tiny">
+                                                                    <img src="/images/icon/user.png" alt="John Smith">
+                                                                </div>
+                                                                <div class="send-mess-list text-right">
+                                                                    <div class="send-mess text-justify">
+                                                                        <%= ticketMessages[i].message %>
+                                                                        <br>
+                                                                        <span class="mess-time"><%= ticketMessages[i].createdAt.toLocaleDateString() %></span>   
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <% for (let j = 0; j < ticketMessages[i].pics.length; j++) { %>
+                                                            <div class="send-mess-wrap">
+                                                                <div class="send-mess__inner">
+                                                                    <div class="avatar avatar--tiny">
+                                                                        <img src="/images/icon/user.png" alt="John Smith">
+                                                                    </div>
+                                                                    <div class="send-mess-list text-right">
+                                                                        <div class="send-mess text-justify">
+                                                                            <img src="<%= ticketMessages[i].pics[j] %>" alt="عکس یا اسکرین شاتی که فرستاده بودی">
+                                                                            <br>
+                                                                            <span class="mess-time"><%= ticketMessages[i].createdAt.toLocaleDateString() %></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <% } %>
+                                                    <% } else { %>
+                                                        <div class="recei-mess-wrap">
+                                                            <div class="recei-mess__inner">
+                                                                <div class="recei-mess-list text-right">
+                                                                    <div class="recei-mess float-left text-justify">
+                                                                        <%= support.fullname %>
+                                                                        <br>
+                                                                        <%= ticketMessages[i].message %>
+                                                                        <br>
+                                                                        <span class="mess-time"><%= ticketMessages[i].createdAt.toLocaleDateString() %></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <% } %>
+                                                <% } %>
+                                            </div>
+                                            <div class="au-chat-textfield">
+                                                <form action="/user/tickets/<%= ticket.id %>/message" method="post" class="au-form-icon" enctype="multipart/form-data">
+                                                    <button style="right: 70px;" class="au-input-icon" type="submit" >
+                                                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                                    </button>
+                                                    <input style="padding-right: 150px;" class="au-input au-input--full au-input--h65" name="message" type="text" required placeholder="بتایپ">
+                                                    <button class="au-input-icon" type="button" onclick="document.getElementById('files').click();" >
+                                                        <i class="zmdi zmdi-camera"></i>
+                                                    </button>
+                                                    <input type="file"  multiple name="files"  style="display:none;" id="files" >
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+    <%- include('../partials/javascript.ejs') %>
+</body>
+
+</html>
+<!-- end document-->

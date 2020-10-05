@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, Projects">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="overview-wrap">
+                                    <h2 class="title-1">
+                                        <% if (projectType === 'prepared') { %>
+                                            پروژه های CMS ای
+                                        <% } else if (projectType === 'static') { %>
+                                            پروژه های استاتیک
+                                        <% } %>
+                                    </h2>
+                                    <% if (projectType === 'prepared') { %>
+                                        <a href="/projects/prepared-projects/create" class="au-btn au-btn-icon au-btn--blue">
+                                            ایجاد پروژه CMS ای جدید
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </a>
+                                    <% } else if (projectType === 'static') { %>
+                                        <a href="/projects/static-projects/create" class="au-btn au-btn-icon au-btn--blue">
+                                            ایجاد پروژه استاتیک
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </a>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive table--no-card m-b-40">
+                                    <% if (projects.length > 0) { %>
+                                        <table class="table table-borderless table-striped table-earning">
+                                            <thead>
+                                                <tr>
+                                                    <th>نام پروژه</th>
+                                                    <th>نوع پروژه</th>
+                                                    <th>وضعیت پروژه</th>
+                                                    <th>تاریخ ایجاد پروژه</th>
+                                                    <th>عملیات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for (let i = 0; i < projects.length; i++) { %>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="/projects/<% if (projectType === 'prepared') { %>prepared-projects<% } else if (projectType === 'static') { %>static-projects<% } %>/inspect/<%= projects[i].id %>/" title="اطلاعات کلی">
+                                                                <%= projects[i].name %>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <% for (let j = 0; j < images.length; j++) { %>
+                                                                <% if (images[j].id === projects[i].imageId) { %>
+                                                                    <img class="" style="width: 50px;" src="/images/docker-icons/<%= images[j].name %>.png" alt="آیکون برنامه CMS ای که درست کردی">
+                                                                <% } %>
+                                                            <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <% if(projects[i].scale) { %> روشن <% } else { %> خاموش <% } %>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <%= projects[i].createdAt.toLocaleTimeString() %>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <button type="button" data-toggle="modal" data-target="#deleteProjects" class="btn btn-outline-danger" data-whatever="<%= projects[i].id %>">
+                                                                حذف این برنامه
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                <% } %>
+                                            </tbody>
+                                        </table>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+
+    <!-- modal delete project -->
+    <div class="modal fade" id="deleteProjects" tabindex="-1" role="dialog" aria-labelledby="deleteProjectsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form id="deleteProjectForm" action="/projects/<% if (projectType === 'prepared') { %>prepared-projects<% } else if (projectType === 'static') { %>static-projects<% } %>/delete" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteProjectLabel">میخوای پروژه رو حذف کنی؟</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-justify">
+                            اگه مطمئنی میخوای حذفش کنی ما کاری به کارت نداریم حذفش بکن. ولی یادت باشه بعد حذف شدن دیگه نمیتونی برش گردونی.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal">اشتب شد، دستم خورد روش</button>
+                        <button type="submit" class="btn btn-primary">آره مطمئنم حذفش کن</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end modal delete project -->
+    <%- include('../partials/javascript.ejs') %>
+
+    <script>
+        $('#deleteProjects').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var projectId = button.data('whatever') // Extract info from data-* attributes
+            var formAction = $('#deleteProjectForm').attr('action');
+            $('#deleteProjectForm').attr('action', `${formAction}/${projectId}`);
+        });
+    </script>
+</body>
+
+</html>

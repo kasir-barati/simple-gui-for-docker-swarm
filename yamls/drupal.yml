@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+    drupal:
+        image: drupal:8
+        ports:
+            - "publishedPort:80"
+        volumes:
+            - "drupal:/var/www/html"
+        deploy:
+            mode: replicated
+            replicas: 1
+            resources: 
+                limits: 
+                    cpus: "cpu"
+                    memory: ram
+    db:
+        image: mysql:5.7
+        volumes:
+            - db:/var/lib/mysql
+        ports:
+            - "mysqlPublishedPort:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: "dbRootPassword"
+            MYSQL_DATABASE: "drupal"
+            MYSQL_USER: "drupal"
+            MYSQL_PASSWORD: "dbPassword"
+        deploy:
+            mode: replicated
+            replicas: 1
+            resources: 
+                limits: 
+                    cpus: "cpu"
+                    memory: ram
+
+volumes:
+    drupal: {}
+    db: {}

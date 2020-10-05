@@ -1,0 +1,150 @@
+<!-- MENU SIDEBAR-->
+<aside class="menu-sidebar d-none d-lg-block">
+    <div class="logo">
+        <a href="#" class="m-auto">
+            <img style="width: 120px;" src="/images/icon/logo.png" alt="Ariana-Cloud" />
+        </a>
+    </div>
+    <div class="menu-sidebar__content js-scrollbar1">
+        <nav class="navbar-sidebar">
+            <ul class="list-unstyled navbar__list">
+                <li>
+                    <a href="/projects/prepared-projects">
+                        پروژه های CMS ای
+                    </a>
+                </li>
+                <li>
+                    <a href="/projects/static-projects">
+                        پروژه های static
+                    </a>
+                </li>
+                <li>
+                    <a href="/projects/dynamic-projects">
+                        پروژه های داینامیک
+                    </a>
+                </li>
+                <% if (projectId) { %>
+                    <li><hr class="border w-100"></li>
+                    <% if (projectType === 'prepared') { %>
+                        <li>
+                            <a href="/projects/prepared-projects/inspect/<%= projectId %>">
+                                یه مشته جزئیات در مورد پروژت
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/prepared-projects/logs/<%= projectId %>">
+                                لاگ ها
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/prepared-projects/exec/<%= projectId %>">
+                                ترمینال
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/prepared-projects/resources/<%= projectId %>">
+                                تغییر دادن منابع
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/prepared-projects/stats/<%= projectId %>">
+                                وضعیت منابع
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/prepared-projects/env/<%= projectId %>">
+                                env
+                            </a>
+                        </li>
+                    <% } else if (projectType === 'static') { %>
+                        <li>
+                            <a href="/projects/static-projects/inspect/<%= projectId %>">
+                                یه مشته جزئیات در مورد پروژت
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/static-projects/logs/<%= projectId %>">
+                                لاگ ها
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/static-projects/exec/<%= projectId %>">
+                                ترمینال
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/static-projects/resources/<%= projectId %>">
+                                تغییر دادن منابع
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/static-projects/stats/<%= projectId %>">
+                                وضعیت منابع
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/static-projects/env/<%= projectId %>">
+                                env
+                            </a>
+                        </li>
+                    <% } else if (projectType === 'dynamic') { %>
+                        <li>
+                            <a href="/projects/dynamic-projects/inspect/<%= projectId %>">
+                                یه مشته جزئیات در مورد پروژت
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/dynamic-projects/logs/<%= projectId %>">
+                                لاگ ها
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/dynamic-projects/exec/<%= projectId %>">
+                                ترمینال
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/dynamic-projects/resources/<%= projectId %>">
+                                تغییر دادن منابع
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/dynamic-projects/stats/<%= projectId %>">
+                                وضعیت منابع
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects/dynamic-projects/env/<%= projectId %>">
+                                env
+                            </a>
+                        </li>
+                    <% } %>
+                <% } %>
+                <% if (isAdmin) { %>
+                    <li><hr class="border w-100"></li>
+                    <li>
+                        <a href="/admin/images">
+                            ایمیجا
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/plans">
+                            پلنا
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/admins">
+                            ادمینا و یوزرا
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/user-payments">
+                            پرداختای کاربرا
+                        </a>
+                    </li>
+                <% } %>
+            </ul>
+        </nav>
+    </div>
+</aside>
+<!-- END MENU SIDEBAR-->

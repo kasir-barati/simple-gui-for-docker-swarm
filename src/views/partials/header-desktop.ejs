@@ -1,0 +1,84 @@
+<!-- HEADER DESKTOP-->
+<header class="header-desktop text-right" dir="ltr">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="header-wrap">
+                <div class="header-button w-100 justify-content-between">
+                    <div class="account-wrap">
+                        <div class="content">
+                            <a href="https://instagram.com">
+                                <img style="width: 30px;" src="/images/instagram.png" alt="Ariana-Cloud instagram" title="Ariana-Cloud instagram">
+                            </a>
+                            <a href="https://github.com">
+                                <img style="width: 30px;" src="/images/github.png" alt="Ariana-Cloud GitHub" title="Ariana-Cloud GitHub">
+                            </a>
+                            <a href="https://google.com">
+                                <img style="width: 30px;" src="/images/gmail.png" alt="Ariana-Cloud Gmail" title="Ariana-Cloud Gmail">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="account-wrap">
+                        <div class="content">
+                            <a class="" href="/user/tickets">
+                                تیکت ها
+                            </a>
+                        </div>
+                    </div>
+                    <div class="account-wrap">
+                        <div class="content">
+                            <a class="" href="/user/payments">
+                                اعتبار شما: <%= balance %>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="account-wrap">
+                        <div class="account-item clearfix js-item-menu">
+                            <div class="image">
+                                <img src="/images/icon/user.png" alt="John Doe" />
+                            </div>
+                            <div class="content">
+                                <a class="js-acc-btn" href="#"><%= fullname %></a>
+                            </div>
+                            <div class="account-dropdown js-dropdown">
+                                <div class="info clearfix">
+                                    <div class="image">
+                                        <a href="#">
+                                            <img src="/images/icon/user.png" alt="John Doe" />
+                                        </a>
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="name">
+                                            <a href="/user/profile"><%= fullname %></a>
+                                        </h5>
+                                        <span class="email"><%= email %></span>
+                                    </div>
+                                </div>
+                                <div class="account-dropdown__body">
+                                    <div class="account-dropdown__item">
+                                        <a href="/user/profile">
+                                            <i class="zmdi zmdi-account"></i>
+                                            پروفایلت
+                                        </a>
+                                    </div>
+                                    <div class="account-dropdown__item">
+                                        <a href="/user/payments">
+                                            <i class="zmdi zmdi-money-box"></i>
+                                            پرداخت ها
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="account-dropdown__footer">
+                                    <a href="/logout">
+                                        <i class="zmdi zmdi-power"></i>
+                                        لاگ اوت
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- HEADER DESKTOP-->

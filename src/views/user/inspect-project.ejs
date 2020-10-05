@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, Project's details">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+    <style>
+        #exTab1 .tab-content {
+            color: white;
+            background-color: #428bca;
+            padding: 5px 15px;
+        }
+    </style>
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header h2">جزئیات پروژه</div>
+                                    <div class="card-body card-block">
+                                        <ul  class="nav nav-tabs mr-0 pr-0 mt-4">
+                                            <li class="active">
+                                                <a class="nav-link active" href="#inspectProject" data-toggle="tab">
+                                                    اطلاعات کلی برنامه
+                                                    <i class="fa fa-cube" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
+                                            <% if (projectType !== 'static' && databaseInspect.ID) { %>
+                                                <li>
+                                                    <a class="nav-link" href="#inspectDatabase" data-toggle="tab">
+                                                        اطلاعات کلی دیتابیس
+                                                        <i class="fa fa-database" aria-hidden="true"></i>
+                                                    </a>
+                                                </li>
+                                            <% } %>
+                                        </ul>
+                                        <div class="tab-content rounded-bottom">
+                                            <div class="tab-pane active" id="inspectProject">
+                                                <ul class="list-group mr-0 pr-0 text-dark h6">
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        آی دی سرویس: 
+                                                        <span class="badge badge-primary badge-pill pr-4">
+                                                            <%= projectInspect.ID %>
+                                                            <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= projectInspect.ID %>" >
+                                                                <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        تارخی که این سرویس ایجاد شد: 
+                                                        <span class="badge badge-primary badge-pill pr-4">
+                                                            <%= projectInspect.CreatedAt %>
+                                                            <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= projectInspect.CreatedAt %>" >
+                                                                <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        تاریخ آخرین باری که سرویس ویرایش شد: 
+                                                        <span class="badge badge-primary badge-pill pr-4">
+                                                            <%= projectInspect.UpdatedAt %>
+                                                            <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= projectInspect.UpdatedAt %>" >
+                                                                <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        نام: 
+                                                        <span class="badge badge-primary badge-pill pr-4">
+                                                            <%= projectInspect.Spec.Name %>
+                                                            <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= projectInspect.Spec.Name %>" >
+                                                                <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        تعداد core های اختصاص یافته
+                                                        <span class="badge badge-primary badge-pill pr-4">
+                                                            <%= projectInspect.Spec.TaskTemplate.Resources.Limits.NanoCPUs %>
+                                                            <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= projectInspect.Spec.TaskTemplate.Resources.Limits.NanoCPUs %>" >
+                                                                <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        چند گیگ رم داره
+                                                        <span class="badge badge-primary badge-pill pr-4">
+                                                            <%= projectInspect.Spec.TaskTemplate.Resources.Limits.MemoryBytes %>
+                                                            <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= projectInspect.Spec.TaskTemplate.Resources.Limits.MemoryBytes %>" >
+                                                                <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        پورت برنامه: 
+                                                        <span class="badge badge-primary badge-pill pr-4">
+                                                            <%= projectInspect.Spec.EndpointSpec.Ports[0].TargetPort %>
+                                                            <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= projectInspect.Spec.TaskTemplate.Resources.Limits.MemoryBytes %>" >
+                                                                <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        پورتی که برنامه روی آن سواره:
+                                                        <span class="badge badge-primary badge-pill pr-4">
+                                                            <%= projectInspect.Spec.EndpointSpec.Ports[0].PublishedPort %>
+                                                            <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= projectInspect.Spec.TaskTemplate.Resources.Limits.MemoryBytes %>" >
+                                                                <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <% if (projectType !== 'static' && databaseInspect.ID) { %>
+                                                <div class="tab-pane" id="inspectDatabase">
+                                                    <ul class="list-group mr-0 pr-0 text-dark h6">
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            آی دی سرویس: 
+                                                            <span class="badge badge-primary badge-pill pr-4">
+                                                                <%= databaseInspect.ID %>
+                                                                <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= databaseInspect.ID %>" >
+                                                                    <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                                </button>
+                                                            </span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            تارخی که این سرویس ایجاد شد: 
+                                                            <span class="badge badge-primary badge-pill pr-4">
+                                                                <%= databaseInspect.CreatedAt %>
+                                                                <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= databaseInspect.CreatedAt %>" >
+                                                                    <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                                </button>
+                                                            </span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            تاریخ آخرین باری که سرویس ویرایش شد: 
+                                                            <span class="badge badge-primary badge-pill pr-4">
+                                                                <%= databaseInspect.UpdatedAt %>
+                                                                <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= databaseInspect.UpdatedAt %>" >
+                                                                    <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                                </button>
+                                                            </span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            نام: 
+                                                            <span class="badge badge-primary badge-pill pr-4">
+                                                                <%= databaseInspect.Spec.Name %>
+                                                                <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= databaseInspect.Spec.Name %>" >
+                                                                    <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                                </button>
+                                                            </span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            تعداد core های اختصاص یافته
+                                                            <span class="badge badge-primary badge-pill pr-4">
+                                                                <%= databaseInspect.Spec.TaskTemplate.Resources.Limits.NanoCPUs %>
+                                                                <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= databaseInspect.Spec.TaskTemplate.Resources.Limits.NanoCPUs %>" >
+                                                                    <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                                </button>
+                                                            </span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            چند گیگ رم داره
+                                                            <span class="badge badge-primary badge-pill pr-4">
+                                                                <%= databaseInspect.Spec.TaskTemplate.Resources.Limits.MemoryBytes %>
+                                                                <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= databaseInspect.Spec.TaskTemplate.Resources.Limits.MemoryBytes %>" >
+                                                                    <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                                </button>
+                                                            </span>
+                                                        </li>
+                                                        <% Object.keys(databaseEnv).forEach(key => { %>
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                <%= key %>
+                                                                <span class="badge badge-primary badge-pill pr-4">
+                                                                    <%= databaseEnv[key] %>
+                                                                    <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= databaseEnv[key] %>" >
+                                                                        <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </li>
+                                                        <% }) %>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            پورت دیتابیس: 
+                                                            <span class="badge badge-primary badge-pill pr-4">
+                                                                <%= databaseInspect.Spec.EndpointSpec.Ports[0].TargetPort %>
+                                                                <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= databaseInspect.Spec.EndpointSpec.Ports[0].TargetPort %>" >
+                                                                    <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                                </button>
+                                                            </span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            پورتی که دیتابیس روی آن سواره:
+                                                            <span class="badge badge-primary badge-pill pr-4">
+                                                                <%= databaseInspect.Spec.EndpointSpec.Ports[0].PublishedPort %>
+                                                                <button type="button" class="btn btn-link text-dark btn-tooltip" data-clipboard-text="<%= databaseInspect.Spec.EndpointSpec.Ports[0].PublishedPort %>" >
+                                                                    <i class="fa fa-clone"  alt="کپی کردن" aria-hidden="true"></i>
+                                                                </button>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+    <%- include('../partials/javascript.ejs') %>
+    <script src="/js/clipboard.min.js"></script>
+    <script>
+        $('.btn-tooltip').tooltip({
+            trigger: 'click',
+            placement: 'bottom'
+        });
+
+        function setTooltip(btn, message) {
+            $(btn).tooltip('hide').attr('data-original-title', message).tooltip('show');
+        }
+
+        function hideTooltip(btn) {
+            setTimeout(function() {
+                $(btn).tooltip('hide');
+            }, 1000);
+        };
+
+        var clipboard = new ClipboardJS('.btn-tooltip');
+
+        clipboard.on('success', function(e) {
+            e.clearSelection();
+            setTooltip(e.trigger, 'کپی شد!');
+            hideTooltip(e.trigger);
+        });
+
+        clipboard.on('error', function(e) {
+            e.clearSelection();
+            setTooltip(e.trigger, 'کپی نشد!');
+            hideTooltip(e.trigger);
+        });
+    </script>
+</body>
+
+</html>
+<!-- end document-->

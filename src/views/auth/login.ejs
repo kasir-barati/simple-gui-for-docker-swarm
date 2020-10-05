@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <div class="page-content--bge5">
+            <div class="container">
+                <div class="login-wrap text-right">
+                    <div class="login-content">
+                        <div class="login-logo">
+                            <a href="/">
+                                <img src="/images/icon/logo.png" title="Ariana-Cloud" alt="Ariana-Cloud">
+                            </a>
+                        </div>
+                        <%- include('../partials/errors.ejs') %>
+                        <div class="login-form">
+                            <form action="" method="post">
+                                <div class="form-group">
+                                    <label>ایمیلتو این زیره بینویس</label>
+                                    <input class="au-input au-input--full" value="<%= email %>" type="email" name="email" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label>رمز عبور</label>
+                                    <input class="au-input au-input--full" type="password" name="password"
+                                        placeholder="Password">
+                                </div>
+                                <div class="login-checkbox">
+                                    <label>
+                                        <button style="text-decoration: none;" type="button" class="btn btn-link" data-toggle="modal" data-target="#emailVerification">
+                                            اکانتت تائید نشدس؟
+										</button>
+                                    </label>
+                                    <label>
+                                        <button style="text-decoration: none;" type="button" class="btn btn-link" data-toggle="modal" data-target="#passwordReset">
+											رمزتو یادت رفته؟
+										</button>
+                                    </label>
+                                </div>
+                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">لاگین کن</button>
+                            </form>
+                            <div class="register-link">
+                                <p>
+                                    اکانت نداری؟ غمت نباشه،
+                                    <a href="/register">اینجی ثبت نام کن</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade text-right" id="passwordReset" tabindex="-1" role="dialog" aria-labelledby="passwordResetLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form action="/password-reset" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="passwordResetLabel">رمزتو یادت رفته، عیبی نداره الا برات یه رمز جدید میفرستم</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <input type="email" placeholder="sample@samle.sample" name="email" class="form-control">
+                            </div>
+                            <div class="input-gropup mt-3">
+                                کاربر فراموشکار لطفا ایمیلی که باهاش ثبت نام کردی رو اینجی بتایپ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">
+                            رمزو یادم اومد بیخیال
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            برام رمزو بفرست
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade text-right" id="emailVerification" tabindex="-1" role="dialog" aria-labelledby="emailVerificationLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form action="/email-verification" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="emailVerificationLabel">اکانتتو میخوای فعال کنی؟</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <input type="email" placeholder="sample@samle.sample" name="email" class="form-control">
+                            </div>
+                            <div class="input-gropup mt-3">
+                                ایمیلتو بتایپ. برات یه لینک میفرستم که توش یه لینکه، وقتی روش کلیک کنی اکانتت فعال میشه.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">
+                            نمیخوام
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            برام ایمیل تائیدیه رو بفرست
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%- include('../partials/javascript.ejs') %>
+</body>
+
+</html>
+<!-- end document-->

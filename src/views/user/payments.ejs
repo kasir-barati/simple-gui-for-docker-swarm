@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, CMS project">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="overview-wrap">
+                                    <h2 class="title-1">لیست پرداخت هات</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive table--no-card m-b-40">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless table-data3">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">تاریخ پرداخت</th>
+                                                    <th scope="col">وضعیت پرداخت</th>
+                                                    <th scope="col">مبلغ به تومن</th>
+                                                </thead>
+                                            </tr>
+                                            <tbody>
+                                                <% if (payments.length > 0) { %>
+                                                    <% for (let i = 0; i < payments.length; i++) { %>
+                                                        <tr>
+                                                            <td scope="row"><%= i + 1 %></td>
+                                                            <td><%= payments[i].createdAt.toLocaleDateString() %></td>
+                                                            <% if (payments[i].status === 'paid') { %>
+                                                                <td class="process">پرداخت انجام شد.</td>
+                                                            <% } else { %>
+                                                                <td class="denied">پرداخت انجام نشد.</td>
+                                                            <% } %>
+                                                            <td><%= payments[i].amount %></td>
+                                                        </tr>
+                                                    <% } %>
+                                                <% } else { %>
+                                                    <tr>
+                                                        <td scope="row">1</td>
+                                                        <td>-</td>
+                                                        <td class="denied">تا امروز حسابتو شارژ نکردی</td>
+                                                        <td>-</td>
+                                                    </tr>
+                                                <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="card-title">
+                                            <h3 class="text-center title-2">این زیره حسابتو شارژ کن</h3>
+                                        </div>
+                                        <hr>
+                                        <form action="/user/payments/pay" method="post">
+                                            <div class="form-group">
+                                                <label for="amount" class="control-label mb-1">چقه میخوای شارژ کنی؟</label>
+                                                <input id="amount" name="amount" type="number" class="form-control" required aria-required="true" aria-invalid="false" min="10000" value="10000">
+                                            </div>
+                                            <div>
+                                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                                    <span id="payment-button-amount">پرداخت مبلغ</span>
+                                                    <span id="payment-button-sending" style="display:none;">Sending…</span>
+                                                    <i class="fa fa-lock fa-lg"></i>&nbsp;
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+
+    <!-- modal delete project -->
+    <div class="modal fade" id="deleteProjects" tabindex="-1" role="dialog" aria-labelledby="deleteProjectsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form id="deleteProjectForm" action="/projects/prepared-projects/delete" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteProjectLabel">میخوای پروژه رو حذف کنی؟</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-justify">
+                            اگه مطمئنی میخوای حذفش کنی ما کاری به کارت نداریم حذفش بکن. ولی یادت باشه بعد حذف شدن دیگه نمیتونی برش گردونی.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal">اشتب شد، دستم خورد روش</button>
+                        <button type="submit" class="btn btn-primary">آره مطمئنم حذفش کن</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end modal delete project -->
+    <%- include('../partials/javascript.ejs') %>
+
+    <script>
+        $('#deleteProjects').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var projectId = button.data('whatever') // Extract info from data-* attributes
+            var formAction = $('#deleteProjectForm').attr('action');
+            $('#deleteProjectForm').attr('action', `${formAction}/${projectId}`);
+        });
+    </script>
+</body>
+
+</html>
+<!-- end document-->

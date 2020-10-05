@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+    joomla:
+        image: joomla:3
+        ports:
+            - "publishedPort:80"
+        environment:
+            JOOMLA_DB_HOST: "serviceName_db"
+            JOOMLA_DB_USER: "joomla"
+            JOOMLA_DB_NAME: "joomla"
+            JOOMLA_DB_PASSWORD: "dbPassword"
+        volumes: 
+            - "joomla:/var/www/html"
+        deploy:
+            mode: replicated
+            replicas: 1
+            endpoint_mode: vip
+            resources: 
+                limits: 
+                    cpus: "cpu"
+                    memory: ram
+    db:
+        image: mysql:5.7
+        volumes:
+            - "db:/var/lib/mysql"
+        ports:
+            - "mysqlPublishedPort:3306"
+        environment:
+            MYSQL_USER: "joomla"
+            MYSQL_DATABASE: "joomla"
+            MYSQL_PASSWORD: "dbPassword"
+            MYSQL_ROOT_PASSWORD: "dbRootPassword"
+        deploy:
+            mode: replicated
+            replicas: 1
+            endpoint_mode: vip
+            resources: 
+                limits: 
+                    cpus: "cpu"
+                    memory: ram
+volumes:
+    joomla: {}
+    db: {}

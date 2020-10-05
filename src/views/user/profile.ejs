@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, CMS project">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="overview-wrap">
+                                    <h2 class="title-1">اطلاعاتت</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">اگه دلت خواست میتونی این زیر اطلاعاتت رو تغییر بدی</div>
+                                    <div class="card-body card-block">
+                                        <form action="/user/profile" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-user"></i>
+                                                    </div>
+                                                    <input type="text" id="fullname" name="fullname" placeholder="مش صفدر صفدری" value="<%= fullname %>" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-envelope"></i>
+                                                    </div>
+                                                    <input type="email" value="<%= email %>" id="email" name="email" placeholder="sample@sample.sample" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-mobile-phone"></i>
+                                                    </div>
+                                                    <input type="tel" id="phone" value="<%= phone %>" name="phone" placeholder="09103214546" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-actions form-group">
+                                                <button type="submit" class="btn btn-secondary btn-sm">ثبت تغییرات</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>عوض کردن رمز عبور</strong>
+                                    </div>
+                                    <div class="card-body card-block">
+                                        <form action="/user/password-reset" method="post" class="form-horizontal">
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="password" class=" form-control-label">رمز عبور قدیمی</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="password" id="password" name="password" placeholder="رمز عبور قبلیت" class="form-control">
+                                                    <span class="help-block">
+                                                        بدون داشتن رمز قبلیت نمیتونی رمز عبور جدیدی بسازی
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="newPassword" class="form-control-label">رمز عبور جدید</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="password" id="newPassword" name="newPassword" placeholder="رمز عبور جدید" class="form-control">
+                                                    <span class="help-block">
+                                                        شرایط رمز جدید: حداقل ۸ کاراکتر، ترکیبی از اعداد و حروف
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="confirmPassword" class="form-control-label">تکرار رمز عبور جدید</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="رمز عبور جدیدتو دوباره تایپ کن" class="form-control">
+                                                    <span class="help-block">
+                                                        تکرار رمز جدیدتو برا محکم کاری میخوام
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-dot-circle-o"></i>
+                                            رمزمو عوض کن
+                                        </button>
+                                        <button type="reset" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-ban"></i> 
+                                            باز نشانی
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+
+    <!-- modal delete project -->
+    <div class="modal fade" id="deleteProjects" tabindex="-1" role="dialog" aria-labelledby="deleteProjectsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form id="deleteProjectForm" action="/projects/prepared-projects/delete" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteProjectLabel">میخوای پروژه رو حذف کنی؟</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-justify">
+                            اگه مطمئنی میخوای حذفش کنی ما کاری به کارت نداریم حذفش بکن. ولی یادت باشه بعد حذف شدن دیگه نمیتونی برش گردونی.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal">اشتب شد، دستم خورد روش</button>
+                        <button type="submit" class="btn btn-primary">آره مطمئنم حذفش کن</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end modal delete project -->
+    <%- include('../partials/javascript.ejs') %>
+
+    <script>
+        $('#deleteProjects').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var projectId = button.data('whatever') // Extract info from data-* attributes
+            var formAction = $('#deleteProjectForm').attr('action');
+            $('#deleteProjectForm').attr('action', `${formAction}/${projectId}`);
+        });
+    </script>
+</body>
+
+</html>
+<!-- end document-->

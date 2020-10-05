@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+    wordpress:
+        image: wordpress:5.4
+        ports:
+            - "10381:80"
+        environment:
+            WORDPRESS_DB_HOST: db
+            WORDPRESS_DB_USER: wordpress
+            WORDPRESS_DB_PASSWORD: "aca2eb6794bc803a3487"
+            WORDPRESS_DB_NAME: wordpress
+        volumes: 
+            - wordpress:/var/www/html
+        deploy:
+            mode: replicated
+            replicas: 1
+            endpoint_mode: vip
+            resources: 
+                limits: 
+                    cpus: '1'
+                    memory: 1GB
+    db:
+        image: mysql:5.7
+        volumes:
+            - db:/var/lib/mysql
+        ports:
+            - "33297:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: "6f59f80ccd25a11b94a0"
+            MYSQL_DATABASE: wordpress
+            MYSQL_USER: wordpress
+            MYSQL_PASSWORD: "aca2eb6794bc803a3487"
+        deploy:
+            mode: replicated
+            replicas: 1
+            endpoint_mode: vip
+            resources: 
+                limits: 
+                    cpus: '1'
+                    memory: 1GB
+
+volumes:
+    wordpress: {}
+    db: {}

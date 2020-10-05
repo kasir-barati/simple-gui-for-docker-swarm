@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, CMS project">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="overview-wrap">
+                                    <h2 class="title-1">لیست پلنا</h2>
+                                    <button type="button" class="au-btn au-btn-icon au-btn--blue" data-toggle="modal"
+                                        data-target="#createImage">
+                                        افزودن پلن
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive table--no-card m-b-40">
+                                    <% if (plans.length > 0) { %>
+                                    <table class="table table-borderless table-striped table-earning">
+                                        <thead>
+                                            <tr>
+                                                <th>نام پلن</th>
+                                                <th>پلن قابل انتخابه؟</th>
+                                                <th>قیمت پلن</th>
+                                                <th>مقدار حافظه پلن</th>
+                                                <th>مقدار رم پلن</th>
+                                                <th>پلن چند تا هسته داره؟</th>
+                                                <th class="text-right">تاریخ ایجاد پلن</th>
+                                                <th class="text-right">عملیات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for (let i = 0; i < plans.length; i++) { %>
+                                            <tr>
+                                                <td>
+                                                    <a href="/admin/plans/edit/<%= plans[i].id %>/" title="ویرایش پلن">
+                                                        <%= plans[i].name %>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <% if (plans[i].available) { %>
+                                                    آره
+                                                    <% } else { %>
+                                                    نه
+                                                    <% } %>
+                                                </td>
+                                                <td class="text-right">
+                                                    <%= plans[i].price %>
+                                                </td>
+                                                <td class="text-right">
+                                                    <%= plans[i].volume %>GB
+                                                </td>
+                                                <td class="text-right">
+                                                    <%= plans[i].ram %>
+                                                </td>
+                                                <td class="text-right">
+                                                    <%= plans[i].cpu %>
+                                                </td>
+                                                <td class="text-justify">
+                                                    <%= plans[i].createdAt.toLocaleDateString() %>
+                                                </td>
+                                                <td class="text-right">
+                                                    <button type="button" data-toggle="modal" data-target="#deletePlans"
+                                                        class="btn btn-outline-danger"
+                                                        data-whatever="<%= plans[i].id %>">
+                                                        حذف این پلن
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+
+    <!-- Modal: create plan -->
+    <div class="modal fade" id="createImage" tabindex="-1" role="dialog" aria-labelledby="createimageLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal" action="/admin/plans/create" method="post">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createimageLabel">
+                            پلن جدیدت رو بساز
+                        </h5>
+                    </div>
+                    <!--Body-->
+                    <div class="modal-body">
+                        <!-- plan name -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="planName" class="form-control-label">
+                                    اسم پلنت
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" required name="name" type="text" id="planName"
+                                    placeholder="اسم پلن">
+                                <small class="form-text text-muted">
+                                    اسم پلنت نباس تکراری باشه
+                                </small>
+                            </div>
+                        </div>
+                        <!-- plan available -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="planAvailable" class=" form-control-label">
+                                    قابل انتخاب بودن پلن
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <label class="switch switch-3d switch-success mr-3">
+                                    <input type="checkbox" id="planAvailable" name="available" class="switch-input">
+                                    <span class="switch-label"></span>
+                                    <span class="switch-handle"></span>
+                                </label>
+                                <small class="form-text text-muted">
+                                    اینجی مشخص کن که کاربر بتونه از این پلن استفاده بکنه یا نه
+                                </small>
+                            </div>
+                        </div>
+                        <!-- plan price -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="planPrice" class=" form-control-label">
+                                    به ازای هر ساعت چقه کم کنه
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="price" required type="text" placeholder="200"
+                                    id="planPrice">
+                                <small class="form-text text-muted">
+                                    قیمتو به تومن بده
+                                </small>
+                            </div>
+                        </div>
+                        <!-- plan volume -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="planVolume" class=" form-control-label">
+                                    فضای ذخیره سازی
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="volume" placeholder="3" required type="number"
+                                    step="0.25" max="10" min="0.25" id="planVolume">
+                                <small class="form-text text-muted">
+                                    چقه فضای ذخیره سازی بدم؟ به گیگ بگو
+                                </small>
+                            </div>
+                        </div>
+                        <!-- plan RAM -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="planRam" class=" form-control-label">
+                                    رم رو هم بگو
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="ram" placeholder="3GB" required type="text"
+                                    id="planRam">
+                                <small class="form-text text-muted">
+                                    یه چیزی مثل این: 2GB یا 1024B. به بایت یا گیگ بگو
+                                </small>
+                            </div>
+                        </div>
+                        <!-- plan CPU -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="planCpu" class=" form-control-label">
+                                    تعداد هسته های CPU رو مشخص کن
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="cpu" placeholder="3" required type="number"
+                                    step="0.25" max="4" min="0.25" id="planCpu">
+                                <small class="form-text text-muted">
+                                    چقه فضای ذخیره سازی بدم؟ به گیگ بگو
+                                </small>
+                            </div>
+                        </div>
+                        <!-- plan description -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="planDescription" class=" form-control-label">
+                                    توضیحات پلن
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea required name="description" rows="2" placeholder="توضیحات پلن"
+                                    class="form-control" id="planDescription"></textarea>
+                                <small class="form-text text-muted">
+                                    یه مختصر توضیحی در مورد پلنت بده تا کاربرای نوب بدونن پلنت مناسبشون هست یا نه
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal">بیخیال</button>
+                        <button type="submit" class="btn btn-primary">ذخیرش کن</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal: create plan -->
+
+    <!-- modal delete plan -->
+    <div class="modal fade" id="deletePlans" tabindex="-1" role="dialog" aria-labelledby="deletePlansLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form id="deletePlanForm" action="/admin/plans/delete" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deletePlansLabel">میخوای پلنو حذف کنی؟</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-justify">
+                            اگه مطمئنی میخوای حذفش کنی، یادت باشه بعد حذف شدن دیگه نمیتونی برش گردونی.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal">اشتب شد، دستم خورد
+                            روش</button>
+                        <button type="submit" class="btn btn-primary">آره مطمئنم حذفش کن</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end modal delete plan -->
+    <%- include('../partials/javascript.ejs') %>
+
+    <script>
+        $('#deletePlans').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var planId = button.data('whatever') // Extract info from data-* attributes
+            var formAction = $('#deletePlanForm').attr('action');
+            // alert(planId);
+            $('#deletePlanForm').attr('action', `${formAction}/${planId}`);
+        });
+    </script>
+</body>
+
+</html>
+<!-- end document-->

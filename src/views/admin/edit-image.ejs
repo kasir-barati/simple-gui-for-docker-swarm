@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, CMS project">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <!--Header-->
+                                    <div class="card-header h2">ویرایش ایمیج</div>
+                                    <!--Body-->
+                                    <div class="card-body card-block">
+                                        <form class="form-horizontal" action="/admin/images/edit/<%= image.id %>" method="post" enctype="multipart/form-data">
+                                            <div class="modal-body">
+                                                <!-- image name -->
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">
+                                                            اسم ایمیجت
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input class="form-control" required name="name" type="text" id="imageName" value="<%= image.name %>" placeholder="اسم ایمیج">
+                                                        <small class="form-text text-muted">
+                                                            اسم ایمیجت نباس تکراری باشه
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <!-- image picture -->
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">
+                                                            تصویر ایمیجو انتخاب کن
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input class="form-control-file" type="file" name="file" id="files" >
+                                                        <small class="form-text text-muted">
+                                                            عکس جدید جایگزین قبلی میشه
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <!-- image type -->
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">
+                                                            نوع ایمیجه چیه؟
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input class="form-control" name="type" required type="text" id="imageType" value="<%= image.type %>" placeholder="prepared" >
+                                                        <small class="form-text text-muted">
+                                                            مقادیر مجاز برای نوع ایمیج: prepared, project, database, static
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <!-- image versions -->
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">
+                                                            ورژن های ایمیجو بنویس
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input class="form-control" name="versions" required type="text" value="<%= image.versions %>" placeholder="3.2, 3.5, 5.0.1" id="imageVersions" >
+                                                        <small class="form-text text-muted">
+                                                            ورژنای ایمیج که با کاما از هم جدا شدن
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <!-- image plan -->
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">
+                                                            اسم پلنی که فکر میکنی مناسب این ایمیجه بنویس
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input class="form-control" name="planName" value="<%= planName %>" required type="text" id="imagePlan" >
+                                                        <small class="form-text text-muted">اسم پلنی که فکر میکنی ریسورساش جوابگوی این ایمیج هستن</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="fa fa-dot-circle-o"></i> 
+                                                    ثبت تغییرات
+                                                </button>
+                                                <button type="reset" class="btn btn-danger">
+                                                    <i class="fa fa-ban"></i>
+                                                    بازنشانی تموم فیلدا
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+    <%- include('../partials/javascript.ejs') %>
+</body>
+
+</html>
+<!-- end document-->

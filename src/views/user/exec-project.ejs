@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, Project's Command line">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+    <link rel="stylesheet" href="/css/logs.css">
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header h2">میتونی یه مشته کامند این زیر تو پروژت اجرا کنی</div>
+                                    <div class="card-body card-block">
+                                        <form id="executeCommand" action="/projects/<% if (projectType === 'prepared') { %>prepared-projects<% } else if (projectType === 'static') { %>static-projects<% } %>/exec/<%= projectId %>" method="post">
+                                            <div class="input-group mb-3" style="direction: ltr;">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-terminal" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" name="command" class="form-control" placeholder="your coomand comes here ...">
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-outline-secondary" type="submit">اجرای دستور</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <section class="terminal-container terminal-fixed-top">
+                                            <header class="terminal">
+                                                <span class="button red"></span>
+                                                <span class="button yellow"></span>
+                                                <span class="button green"></span>
+                                            </header>
+                                            <div class="terminal-home">
+                                                <% if (commandResult.length > 0) { %>
+                                                    <% for (let i = 0; i < commandResult.length; i++) { %>
+                                                        <p class="console">
+                                                            <%= commandResult[i] %>
+                                                        </p>
+                                                    <% } %>
+                                                <% } else { %>
+                                                    <p class="console">
+                                                        there is nothing to show.
+                                                    </p>
+                                                <% } %>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+    <%- include('../partials/javascript.ejs') %>
+</body>
+
+</html>
+<!-- end document-->

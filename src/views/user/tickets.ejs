@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, CMS project">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
+                                    <div class="au-card-title" style="background-image:url('images/bg-title-01.jpg');">
+                                        <div class="bg-overlay bg-overlay--blue"></div>
+                                        <h3>
+                                            تیکتا
+                                            <i class="zmdi zmdi-account-calendar"></i>
+                                        </h3>
+                                        <button type="button" class="au-btn-plus" data-toggle="modal" data-target="#createTicket">
+                                            <i class="zmdi zmdi-plus"></i>
+										</button>
+                                    </div>
+                                    <div class="au-task js-list-load">
+                                        <div class="au-task__title">
+                                            <p>تیکتای <%= fullname %></p>
+                                        </div>
+                                        <div class="au-task-list js-scrollbar3 h-25">
+                                            <% for (let i = 0; i < tickets.length; i++) { %>
+                                                <div class="au-task__item au-task__item--primary">
+                                                    <div class="au-task__item-inner">
+                                                        <h5 style="font-size: x-large;" class="task">
+                                                            <a class="font-weight-bold" href="/user/tickets/<%= tickets[i].id %>">
+                                                                <%= tickets[i].title %>
+                                                            </a>
+                                                            <% if (tickets[i].status === 'waiting') { %>
+                                                                <span class="badge badge-warning">
+                                                                    در انتظار پاسخ
+                                                                </span>
+                                                            <% } else { %>
+                                                                <span class="badge badge-success">
+                                                                    جوابشو داده
+                                                                </span>
+                                                            <% } %>
+                                                        </h5>
+                                                        <span class="time">
+                                                            <%= tickets[i].createdAt.toLocaleDateString() %>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+
+    <!-- modal create ticket -->
+    <div class="modal fade" id="createTicket" tabindex="-1" role="dialog" aria-labelledby="craeteTicketLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >
+                        پس میخوای سوال بپرسی.
+                    </h5>
+                </div>
+                <form action="/user/tickets/create" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body card-block">
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="title" class=" form-control-label">عنوان تیکت</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" id="title" name="title" placeholder="عنوان تیکت" class="form-control">
+                                        <small class="form-text text-muted">تو عنوان تیکت فقط حروف و اعداد مجازه</small>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="message" class=" form-control-label">متن پیامت</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <textarea name="message" id="message" rows="9" placeholder="متن پیامت" class="form-control"></textarea>
+                                        <small class="form-text text-muted">حداکثر ۱۰۰۰ کاراکتر حق داری بتایپی. این جا میتونی غیر از حروف و اعداد از کاراکتر های دیگه هم استفاده بکنی</small>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="files" class=" form-control-label">عکس یا اسکرین شات</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="file" id="files" name="files" multiple class="form-control-file">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary ml-3" data-dismiss="modal">نمیخوام تیکت بزنم</button>
+                        <button type="submit" class="btn btn-primary">تیکتو بزن</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end modal create ticket -->
+    <%- include('../partials/javascript.ejs') %>
+</body>
+
+</html>
+<!-- end document-->

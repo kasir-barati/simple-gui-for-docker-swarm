@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, Project's envs">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+    <style>
+        #exTab1 .tab-content {
+            color: white;
+            background-color: #428bca;
+            padding: 5px 15px;
+        }
+    </style>
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header h2">متغیرای پروژه</div>
+                                    <div class="card-body card-block">
+                                        <ul class="nav nav-tabs mr-0 pr-0 mt-4">
+                                            <li class="active">
+                                                <a class="nav-link active" href="#projectEnvs" data-toggle="tab">
+                                                    متغیر های برنامه
+                                                    <i class="fa fa-cube" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
+                                            <% if (projectType !== 'static') { %>
+                                                <li>
+                                                    <a class="nav-link" href="#databaseEnvs" data-toggle="tab">
+                                                        متغیر های دیتابیس
+                                                        <i class="fa fa-database" aria-hidden="true"></i>
+                                                    </a>
+                                                </li>
+                                            <% } %>
+                                        </ul>
+                                        <div class="tab-content mb-4 rounded-bottom">
+                                            <div class="tab-pane active" id="projectEnvs">
+                                                <ul class="list-group mr-0 pr-0 text-dark h6">
+                                                    <% Object.keys(projectEnv).forEach(key => { %>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <%= key %>
+                                                            <span class="badge badge-primary badge-pill pr-4">
+                                                                <%= projectEnv[key] %>
+                                                                <button type="button"
+                                                                    class="btn btn-link text-dark btn-tooltip"
+                                                                    data-clipboard-text="<%= projectEnv[key] %>">
+                                                                    <i class="fa fa-clone" alt="کپی کردن"
+                                                                        aria-hidden="true"></i>
+                                                                </button>
+                                                            </span>
+                                                        </li>
+                                                    <% }) %>
+                                                </ul>
+                                                <form class="form mt-3" style="direction: ltr;"
+                                                    action="/projects/<% if (projectType === 'prepared') { %>prepared-projects<% } else if (projectType === 'static') { %>static-projects<% } %>/env/add/<%= projectId %>"
+                                                    method="post">
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Env key comes here. Like: DB_NAME"
+                                                            name="envKey">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Env value comes here. like: databaseName"
+                                                            name="envValue">
+                                                        <div class="input-group-prepend">
+                                                            <button class="btn btn-secondary" type="submit">
+                                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <form class="form mt-3" style="direction: ltr;"
+                                                    action="/projects/<% if (projectType === 'prepared') { %>prepared-projects<% } else if (projectType === 'static') { %>static-projects<% } %>/env/remove/<%= projectId %>"
+                                                    method="post">
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Env key comes here. Like: DB_NAME"
+                                                            name="envKey">
+                                                        <div class="input-group-prepend">
+                                                            <button class="btn btn-secondary" type="submit">
+                                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <% if (projectType !== 'static') { %>
+                                                <div class="tab-pane" id="databaseEnvs">
+                                                    <ul class="list-group mr-0 pr-0 text-dark h6">
+                                                        <% Object.keys(databaseEnv).forEach(key => { %>
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                <%= key %>
+                                                                <span class="badge badge-primary badge-pill pr-4">
+                                                                    <%= databaseEnv[key] %>
+                                                                    <button type="button"
+                                                                        class="btn btn-link text-dark btn-tooltip"
+                                                                        data-clipboard-text="<%= databaseEnv[key] %>">
+                                                                        <i class="fa fa-clone" alt="کپی کردن"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </li>
+                                                        <% }) %>
+                                                    </ul>
+                                                    <div class="mt-3 alert alert-secondary text-right" role="alert">
+                                                        تغییر دادن متغیر برای دیتابیس ممکن نی!
+                                                    </div>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+    <%- include('../partials/javascript.ejs') %>
+    <script src="/js/clipboard.min.js"></script>
+    <script>
+        $('.btn-tooltip').tooltip({
+            trigger: 'click',
+            placement: 'bottom'
+        });
+
+        function setTooltip(btn, message) {
+            $(btn).tooltip('hide').attr('data-original-title', message).tooltip('show');
+        }
+
+        function hideTooltip(btn) {
+            setTimeout(function () {
+                $(btn).tooltip('hide');
+            }, 1000);
+        };
+
+        var clipboard = new ClipboardJS('.btn-tooltip');
+
+        clipboard.on('success', function (e) {
+            e.clearSelection();
+            setTooltip(e.trigger, 'کپی شد!');
+            hideTooltip(e.trigger);
+        });
+
+        clipboard.on('error', function (e) {
+            e.clearSelection();
+            setTooltip(e.trigger, 'کپی نشد!');
+            hideTooltip(e.trigger);
+        });
+    </script>
+</body>
+
+</html>
+<!-- end document-->

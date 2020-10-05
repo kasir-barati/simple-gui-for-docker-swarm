@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, create project">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+    <style>
+        .image-radio {
+            cursor:pointer;
+        }
+
+        .image-radio.selected{
+            box-shadow: 5px 5px 10px black;
+        }
+
+        .plan-radio {
+            cursor:pointer;
+        }
+
+        .plan-radio.selected{
+            box-shadow: 5px 5px 10px black;
+        }
+    </style>
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header h2">
+                                        <% if (projectType === 'prepared') { %>
+                                            ایجاد پروژه CMS ای
+                                        <% } else if (projectType === 'dynamic') { %>
+                                            ایجاد پروژه داینامیک
+                                        <% } else { %>
+                                            ایجاد پروژه استاتیک
+                                        <% } %>
+                                    </div>
+                                    <div class="card-body card-block">
+                                        <% if (projectType === 'prepared') { %>
+                                            <form action="/projects/prepared-projects/create" method="post">
+                                        <% } else if (projectType === 'static') { %>
+                                            <form action="/projects/static-projects/create" method="post" enctype="multipart/form-data" >
+                                        <% } %>
+                                            <% if (projectType === 'prepared' || projectType === 'dynamic') { %>
+                                                <div class="form-group">
+                                                    <div class="col-12 py-2">
+                                                        <h3 class="">کدوم ایمیجو میخوای</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div id="imageRadioGroup" class="input-group">
+                                                        <% for (let i = 0; i < images.length; i++) { %>
+                                                            <img class="image-radio col-md-3 col-sm-6" data-value="<%= images[i].id %>" src="/images/docker-icons/<%= images[i].name %>.png" alt="<%= images[i].name %>" title="<%= images[i].name %>">
+                                                        <% } %>
+                                                        <input type="hidden" id="imageValue" name="imageId" />
+                                                    </div>
+                                                </div>
+                                            <% } %>
+                                            <% if (projectType === 'dynamic' || projectType === 'static') { %>
+                                                <div class="form-group">
+                                                    <div class="col-12 py-3 pt-5">
+                                                        <h3>zip پروژه تو اینجی انتخاب کن</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" dir="ltr">
+                                                    <div class="input-group">
+                                                        <input type="file" name="projectFile" class="form-control">
+                                                    </div>
+                                                </div>
+                                            <% } %>
+                                            <div class="form-group">
+                                                <div class="col-12 py-3 pt-5">
+                                                    <h3 class="">یه اسم رو برنامت بزار</h3>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" dir="ltr">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">https://</div>
+                                                    <input type="text" placeholder="sample-app123" name="name" class="form-control">
+                                                    <div class="input-group-addon">.ariana-cloud.ir</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-12 py-3 pt-5">
+                                                    <h3 class="">پلنی که میخوای رو انتخاب کن</h3>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row" id="planRadioGroup">
+                                                    <% plans.forEach(plan => { %>
+                                                        <div class="col-4">
+                                                            <section class="card plan-radio" data-value="<%= plan.id %>">
+                                                                <div class=" card-header user-header alt">
+                                                                    <div class="media">
+                                                                        <div class="media-body">
+                                                                            <h2 class="display-6">
+                                                                                <%= plan.name %>
+                                                                            </h2>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <ul class="list-group list-group-flush p-0">
+                                                                    <li class="list-group-item align-self-center h5 w-100 p-0">
+                                                                        <span class="badge badge-primary pull-right w-100 py-3">
+                                                                            RAM
+                                                                            <%= plan.ram %>
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="list-group-item align-self-center h5 w-100 p-0">
+                                                                        <span class="badge badge-danger pull-right w-100 py-3">
+                                                                            <%= plan.cpu %>
+                                                                            تا هسته CPU
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="list-group-item align-self-center h5 w-100 p-0">
+                                                                        <span class="badge badge-success pull-right w-100 py-3">
+                                                                            حافظه
+                                                                            <%= plan.volume %>GB
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="list-group-item align-self-center h5 w-100 p-0">
+                                                                        <span class="badge badge-warning pull-right r-activity w-100 py-3">
+                                                                            ساعتی
+                                                                            <%= plan.price %>
+                                                                            کم میشه
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="list-group-item align-self-center bg-dark w-100">
+                                                                        <p class="text-justify text-light">
+                                                                            <%= plan.description %>
+                                                                        </p>
+                                                                    </li>
+                                                                </ul>
+                                                            </section>
+                                                        </div>
+                                                    <% }) %>
+                                                    <input type="hidden" id="planValue" name="planId" />
+                                                </div>
+                                            </div>
+                                            <div class="form-actions form-group">
+                                                <button type="submit" class="btn btn-primary btn-lg">ساختن</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+    <%- include('../partials/javascript.ejs') %>
+
+    <script>
+        $('#imageRadioGroup .image-radio').click(function () {
+            $(this).parent().find('.image-radio').removeClass('selected');
+            $(this).addClass('selected');
+            var val = $(this).attr('data-value');
+            // alert(val);
+            $('#imageValue').val(val);
+        });
+
+        $('#planRadioGroup .plan-radio').click(function () {
+            $(this).parent().parent().parent().find('.plan-radio').removeClass('selected');
+            $(this).addClass('selected');
+            var val = $(this).attr('data-value');
+            // alert(val);
+            $('#planValue').val(val);
+        });
+    </script>
+</body>
+
+</html>

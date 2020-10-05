@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ariana-Cloud - Cloud provider">
+    <meta name="author" content="node.js.developers.kh">
+    <meta name="keywords" content="Ariana-Cloud, Cloud provider">
+
+    <!-- Title Page-->
+    <title><%= pageTitle %></title>
+    <%- include('../partials/stylesheet.ejs') %>
+</head>
+
+<body class="animsition text-right">
+    <div class="page-wrapper text-right">
+        <%- include('../partials/header-mobile.ejs') %>
+        <%- include('../partials/menu-sidebar.ejs') %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <%- include('../partials/header-desktop.ejs') %>
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <%- include ('../partials/menu-sidebar.ejs') %>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <%- include('../partials/errors.ejs') %>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="overview-wrap">
+                                    <h2 class="title-1">لیست ایمیجا</h2>
+                                    <button type="button" class="au-btn au-btn-icon au-btn--blue" data-toggle="modal" data-target="#createimage">
+                                        افزودن ایمیج
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive table--no-card m-b-40">
+                                    <% if (images.length > 0) { %>
+                                        <table class="table table-borderless table-striped table-earning">
+                                            <thead>
+                                                <tr>
+                                                    <th>نام ایمیج</th>
+                                                    <th>تصویر ایمیج</th>
+                                                    <th>نوع ایمیج</th>
+                                                    <th>ورژن ایمیج</th>
+                                                    <th class="text-right">تاریخ ایجاد ایمیج</th>
+                                                    <th class="text-right">عملیات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for (let i = 0; i < images.length; i++) { %>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="/admin/images/edit/<%= images[i].id %>/" title="ویرایش ایمیج">
+                                                                <%= images[i].name %>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <img class="" style="width: 50px;" src="/images/docker-icons/<%= images[i].name %>.png" alt="تصویر ایمیج <%= images[i].name %>">
+                                                        </td>
+                                                        <td>
+                                                            <%= images[i].type %>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <%= images[i].versions %>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <%= images[i].createdAt.toLocaleDateString() %>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <button type="button" data-toggle="modal" data-target="#deleteImages" class="btn btn-outline-danger" data-whatever="<%= images[i].id %>">
+                                                                حذف این ایمیج
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                <% } %>
+                                            </tbody>
+                                        </table>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('../partials/copyright.ejs') %>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+
+    <!-- Modal: create image -->
+    <div class="modal fade" id="createimage" tabindex="-1" role="dialog" aria-labelledby="createimageLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal" action="/admin/images/create" method="post" enctype="multipart/form-data">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createimageLabel">
+                            ایمیج جدیدت رو بساز
+                        </h5>
+                    </div>
+                    <!--Body-->
+                    <div class="modal-body">
+                        <!-- image name -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">
+                                    اسم ایمیجت
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" required name="name" type="text" id="imageName" placeholder="اسم ایمیج">
+                                <small class="form-text text-muted">
+                                    اسم ایمیجت نباس تکراری باشه
+                                </small>
+                            </div>
+                        </div>
+                        <!-- image picture -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">
+                                    تصویر ایمیجو انتخاب کن
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control-file" required type="file" name="file" id="files" >
+                                <small class="form-text text-muted">
+                                    حتما باید انتخاب بکنیش
+                                </small>
+                            </div>
+                        </div>
+                        <!-- image type -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">
+                                    نوع ایمیجه چیه؟
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="type" required type="text" id="imageType" placeholder="prepared" >
+                                <small class="form-text text-muted">
+                                    مقادیر مجاز برای نوع ایمیج: prepared, project, database, static
+                                </small>
+                            </div>
+                        </div>
+                        <!-- image versions -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">
+                                    ورژن های ایمیجو بنویس
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="versions" required type="text" placeholder="3.2, 3.5, 5.0.1" id="imageVersions" >
+                                <small class="form-text text-muted">
+                                    ورژنای ایمیج که با کاما از هم جدا شدن
+                                </small>
+                            </div>
+                        </div>
+                        <!-- image plan -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">
+                                    اسم پلنی که فکر میکنی مناسب این ایمیجه بنویس
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="planName" required type="text" id="imagePlan" >
+                                <small class="form-text text-muted">اسم پلنی که فکر میکنی ریسورساش جوابگوی این ایمیج هستن</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal">بیخیال</button>
+                        <button type="submit" class="btn btn-primary">ذخیرش کن</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal: create image -->
+
+    <!-- modal delete image -->
+    <div class="modal fade" id="deleteImages" tabindex="-1" role="dialog" aria-labelledby="deleteImagesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form id="deleteImageForm" action="/admin/images/delete" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteImagesLabel">میخوای ایمیجو حذف کنی؟</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-justify">
+                            اگه مطمئنی میخوای حذفش کنی، یادت باشه بعد حذف شدن دیگه نمیتونی برش گردونی.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal">اشتب شد، دستم خورد روش</button>
+                        <button type="submit" class="btn btn-primary">آره مطمئنم حذفش کن</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end modal delete Image -->
+    <%- include('../partials/javascript.ejs') %>
+
+    <script>
+        $('#deleteImages').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var imageId = button.data('whatever') // Extract info from data-* attributes
+            var formAction = $('#deleteImageForm').attr('action');
+            $('#deleteImageForm').attr('action', `${formAction}/${imageId}`);
+        });
+    </script>
+</body>
+
+</html>
+<!-- end document-->
